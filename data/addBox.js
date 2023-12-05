@@ -8,7 +8,7 @@ new_element.setAttribute("scale", "1 1 1");
 new_element.setAttribute("color", "blue");
 box_element.after(new_element);
 
-clicked() {
+function clicked() {
 	if (count%2 == 0) {
 		new_element.setAttribute("color", "red");
 	}

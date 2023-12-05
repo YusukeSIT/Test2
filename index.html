@@ -8,7 +8,7 @@
 		<script src="./data/addBox.js" defer></script>
 	</head>
 	<body>
-		<a-scene embedded arjs>
+		<a-scene embedded arjs vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;">
 			<a-box position="0 1 2" scale="1 1 1" color="red"></a-box>
 		</a-scene>
 		<input type="button" id="b1" value="change" onclick="clicked();">

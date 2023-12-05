@@ -1,4 +1,4 @@
-let box_element = document.getElementById('box');
+let box_element = document.querySelector('a-box');
 
 let new_element = document.createElement('a-box');
 new_element.setAttribute("position", "0 2 -2");

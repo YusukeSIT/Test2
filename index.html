@@ -3,14 +3,78 @@
 	<head>
 		<meta http-equiv="content-type" charset="utf-8">
 		<link rel="stylesheet" href="./data/style.css" type="text/css">
-		<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+		<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 		<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-		<script src="./data/addBox.js" defer></script>
+		<script>
+		
+		if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+			window.addEventListener("load", ()=>{
+			    const main = document.querySelector("main");
+			 
+			    main.addEventListener("touchmove", function(e){
+			        // 端末のデフォルト動作をキャンセル
+			        e.preventDefault();
+			 
+			        // タッチ移動中情報を取得
+			        const touches = e.changedTouches;
+			 
+			        // ページ上のオフセット位置取得
+			        const offset = this.getBoundingClientRect();
+			 
+			        // タッチ移動中の座標を全て表示
+			        let touchValue = "";
+			        for(let i=0; i<touches.length; i++){
+			            const x = Math.floor(touches[i].pageX - offset.left);   // x座標
+			            const y = Math.floor(touches[i].pageY - offset.top);    // y座標
+			            touchValue += `touches[${i}] x: ${x}, y: ${y}<br>`;
+			        }
+			 
+			        this.innerHTML = touchValue;
+			    });
+			});
+		}
+
+		</script>
+		<script>
+
+		AFRAME.registerComponent('cursor-listener', {
+    		init: function () {
+   		   this.el.addEventListener('raycaster-intersected', evt => {
+   		     this.raycaster = evt.detail.el;
+   		   });
+   		   this.el.addEventListener('raycaster-intersected-cleared', evt => {
+   		     this.raycaster = null;
+   		   });
+  		  },
+  		  tick: function () {
+  		      if (!this.raycaster) { return; }  // Not intersecting.
+  		      let intersection = this.raycaster.components.raycaster.getIntersection(this.el).point;
+  		      if (!intersection) { return; } // Not intersecting
+  		      // intersecting
+  		      new_box.setAttribute('position', intersection);
+  		  }
+ 		 });
+		</script>
 	</head>
 	<body>
-		<a-scene embedded arjs vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;">
-			<a-box position="0 1 2" scale="1 1 1" color="red"></a-box>
+
+		<!--3D空間-->
+		<a-scene embedded arjs vr-mode-ui="enabled: false;">
+			<a-entity camera look-controls="touchEnabled: false;">
+				
+				<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target;  showLine:true;"></a-entity> <!--移動オブジェクトの移動先の取得-->
+
+				<a-plane cursor-listener id="target" position="0 0 -2" scale="25 15 1" opacity="0"></a-plane> <!--rayの衝突用-->
+			</a-entity>
 		</a-scene>
-		<input type="button" id="b1" value="change" onclick="clicked();">
+
+		<!--仮UI-->
+
+
+
+		<!--JS用-->
+
+		<script src="./data/tutorial.js"></script>
+		<script src="./data/rayControll.js"></script>
 	</body>
 </html>

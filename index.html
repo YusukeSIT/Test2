@@ -26,7 +26,7 @@
 
 		function init() {
 		  // ポインターターゲット用のイベントハンドラーをインストールする
-		  const el = document.getElementById("target");
+		  const el = document.body;
 		  el.onpointerdown = pointerdownHandler;
 		  el.onpointermove = pointermoveHandler;
 
@@ -102,7 +102,7 @@
  		 });
 		</script>
 	</head>
-	<body onload="init();">
+	<body onload="init();" style="touch-action:none">
 
 		<!--3D空間-->
 		<a-scene embedded arjs vr-mode-ui="enabled: false;">

@@ -14,24 +14,53 @@
 			    main.addEventListener("touchmove", function(e){
 			        // 端末のデフォルト動作をキャンセル
 			        e.preventDefault();
-			 
-			        // タッチ移動中情報を取得
-			        const touches = e.changedTouches;
-			 
-			        // ページ上のオフセット位置取得
-			        const offset = this.getBoundingClientRect();
-			 
-			        // タッチ移動中の座標を全て表示
-			        let touchValue = "";
-			        for(let i=0; i<touches.length; i++){
-			            const x = Math.floor(touches[i].pageX - offset.left);   // x座標
-			            const y = Math.floor(touches[i].pageY - offset.top);    // y座標
-			            touchValue += `touches[${i}] x: ${x}, y: ${y}<br>`;
-			        }
-			 
-			        this.innerHTML = touchValue;
 			    });
 			});
+		}
+
+		</script>
+		<script>
+			
+		function pointerdownHandler(ev) {
+		  evCache.push(ev);
+		  new_box.setAttribute('color', 'cyan');
+		}
+
+		function pointermoveHandler(ev) {
+
+		  const index = evCache.findIndex(
+		    (cachedEv) => cachedEv.pointerId === ev.pointerId,
+		  );
+		  evCache[index] = ev;
+
+		  if (evCache.length === 2) {
+		    const curDiff = Math.abs(evCache[0].clientX - evCache[1].clientX);
+
+		    if (prevDiff > 0) {
+		      pos.z += (curDiff - prevDiff) * -0.01;
+
+			  // Restrict scale
+			  pos.z = Math.min(Math.max(-7, pos.z), -2);
+
+			  // Apply scale transform
+			  target.setAttribute('position', pos)
+			  console.log(pos.z);
+			  }
+
+		    // 次の移動イベントのために距離をキャッシュします
+		    prevDiff = curDiff;
+		  }
+		}
+
+		function pointerupHandler(ev) {
+		  
+		  new_box.setAttribute('color', 'yellow');
+		  remove_event(ev);
+
+		  // ポインター数が2未満の場合は、以前の距離をリセットします
+		  if (evCache.length < 2) {
+		    prevDiff = -1;
+		  }
 		}
 
 		</script>

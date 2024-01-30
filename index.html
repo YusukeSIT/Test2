@@ -65,7 +65,7 @@
 		const tpCache = [];
 
 		function init() {
-			const el = document;
+			const el = document.querySelector('a-box');
 			el.ontouchstart = start_handler;
 			el.ontouchmove = move_handler;
 			// touchcancel と touchend に同じハンドラーを使用

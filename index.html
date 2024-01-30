@@ -20,6 +20,23 @@
 
 		</script>
 		<script>
+
+		const evCache = [];
+		const prevDiff = -1;
+
+		function init() {
+		  // ポインターターゲット用のイベントハンドラーをインストールする
+		  const el = document.getElementById("target");
+		  el.onpointerdown = pointerdownHandler;
+		  el.onpointermove = pointermoveHandler;
+
+		  // pointer{up,cancel,out,leave} イベントの意味は - このアプリでは -
+		  // 同じであるため、これらのイベントに同じハンドラーを使用する。
+		  el.onpointerup = pointerupHandler;
+		  el.onpointercancel = pointerupHandler;
+		  el.onpointerout = pointerupHandler;
+		  el.onpointerleave = pointerupHandler;
+		}
 			
 		function pointerdownHandler(ev) {
 		  evCache.push(ev);
@@ -30,7 +47,7 @@
 
 		  const index = evCache.findIndex(
 		    (cachedEv) => cachedEv.pointerId === ev.pointerId,
-		  );
+		  );	
 		  evCache[index] = ev;
 
 		  if (evCache.length === 2) {

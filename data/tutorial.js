@@ -14,15 +14,21 @@ function zoom(event) {
 
   // Apply scale transform
   target.setAttribute('position', pos)
-  console.log(pos.z);
+  console.log(pos);
 }
 
 
 document.body.addEventListener('wheel', zoom, {passive: false});
 
 
-var target_box = document.createElement('a-box');
-target_box.setAttribute('color', 'red');
+var target_area = document.createElement('a-plane');
+target_area.setAttribute('color', 'red');
+target_area.setAttribute('opacity', '0.5');
+target_area.setAttribute('position', '0 0 2');
+target_area.setAttribute('scale', '0.6 0.6 0.6');
+target_area.setAttribute('rotation', '0 180 0');
+
+document.querySelector('a-scene').appendChild(target_area);
 
 
 const tpCache = [];
@@ -55,7 +61,7 @@ const tpCache = [];
           const diff2 = Math.abs(
             ev.targetTouches[0].clientX - ev.targetTouches[1].clientX,
           );
-          pos.z += (diff1 - diff2) * -0.001;
+          pos.z += (diff1 - diff2) * -0.003;
           // Restrict scale
         pos.z = Math.min(Math.max(-7, pos.z), -2);
 

@@ -39,8 +39,10 @@
 		}
 			
 		function pointerdownHandler(ev) {
-		  evCache.push(ev);
-		  new_box.setAttribute('color', 'cyan');
+		  if(evCache.length > 1) {
+			  evCache.push(ev);
+			  new_box.setAttribute('color', 'cyan');		  	
+		  }
 		}
 
 		function pointermoveHandler(ev) {

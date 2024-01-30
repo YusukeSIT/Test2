@@ -21,64 +21,73 @@
 		</script>
 		<script>
 
-		const evCache = [];
-		const prevDiff = -1;
+		const tpCache = [];
 
-		function init() {
-		  // ポインターターゲット用のイベントハンドラーをインストールする
-		  const el = document.body;
-		  el.onpointerdown = pointerdownHandler;
-		  el.onpointermove = pointermoveHandler;
+		const el = document;
+		el.ontouchstart = start_handler;
+		el.ontouchmove = move_handler;
+		// touchcancel と touchend に同じハンドラーを使用
+		el.ontouchcancel = end_handler;
+		el.ontouchend = end_handler;
 
-		  // pointer{up,cancel,out,leave} イベントの意味は - このアプリでは -
-		  // 同じであるため、これらのイベントに同じハンドラーを使用する。
-		  el.onpointerup = pointerupHandler;
-		  el.onpointercancel = pointerupHandler;
-		  el.onpointerout = pointerupHandler;
-		  el.onpointerleave = pointerupHandler;
-		}
-			
-		function pointerdownHandler(ev) {
-		  if(evCache.length > 1) {
-			  evCache.push(ev);
-			  new_box.setAttribute('color', 'cyan');		  	
-		  }
-		}
+		function handle_pinch_zoom(ev) {
+		  if (ev.targetTouches.length === 2 && ev.changedTouches.length === 2) {
+		    // 2 つのタッチが、 2 タッチを開始したのと同じタッチかどうかを確認
+		    const point1 = tpCache.findLastIndex(
+		      (tp) => tp.identifier === ev.targetTouches[0].identifier,
+		    );
+		    const point2 = tpCache.findLastIndex(
+		      (tp) => tp.identifier === ev.targetTouches[1].identifier,
+		    );
 
-		function pointermoveHandler(ev) {
-
-		  const index = evCache.findIndex(
-		    (cachedEv) => cachedEv.pointerId === ev.pointerId,
-		  );	
-		  evCache[index] = ev;
-
-		  if (evCache.length === 2) {
-		    const curDiff = Math.abs(evCache[0].clientX - evCache[1].clientX);
-
-		    if (prevDiff > 0) {
-		      pos.z += (curDiff - prevDiff) * -0.01;
-
-			  // Restrict scale
+		    if (point1 >= 0 && point2 >= 0) {
+		      // 開始座標と移動座標の差を計算
+		      const diff1 = Math.abs(
+		        tpCache[point1].clientX - tpCache[point2].clientX,
+		      );
+		      const diff2 = Math.abs(
+		        ev.targetTouches[0].clientX - ev.targetTouches[1].clientX,
+		      );
+		      pos.z += (diff1 - diff2) * -0.001;
+		      // Restrict scale
 			  pos.z = Math.min(Math.max(-7, pos.z), -2);
 
 			  // Apply scale transform
-			  target.setAttribute('position', pos)
-			  console.log(pos.z);
-			  }
-
-		    // 次の移動イベントのために距離をキャッシュします
-		    prevDiff = curDiff;
+			  target.setAttribute('position', pos);
+			  
+		    } else {
+		      // empty tpCache
+		      tpCache = [];
+		    }
 		  }
 		}
 
-		function pointerupHandler(ev) {
-		  
-		  new_box.setAttribute('color', 'yellow');
-		  remove_event(ev);
+		function start_handler(ev) {。
+		  ev.preventDefault();
+		  // 2タッチピンチ/ズームを後で処理するためにタッチ点をキャッシュする
+		  if (ev.targetTouches.length === 2) {
+		    for (let i = 0; i < ev.targetTouches.length; i++) {
+		      tpCache.push(ev.targetTouches[i]);
+		    }
+		  }  	
+		  new_box.setAttribute('color', 'cyan');
+		}
 
-		  // ポインター数が2未満の場合は、以前の距離をリセットします
-		  if (evCache.length < 2) {
-		    prevDiff = -1;
+		function move_handler(ev) {
+		  ev.preventDefault();
+		  if (!(ev.touches.length === 2 && ev.targetTouches.length === 2)) {
+		  	new_box.setAttribute('color', 'green');
+		  }
+
+		  // 2 タッチの移動/ピンチ/ズームジェスチャーでは、このイベントをチェックする
+		  handle_pinch_zoom(ev);
+		}
+
+		function end_handler(ev) {
+		  ev.preventDefault();
+
+		  if (ev.targetTouches.length === 0) {
+		  	new_box.setAttribute('color', 'yellow');
 		  }
 		}
 

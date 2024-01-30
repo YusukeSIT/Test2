@@ -74,7 +74,7 @@
 		}
 
 		function handle_pinch_zoom(ev) {
-		  if (ev.targetTouches.length === 2 && ev.changedTouches.length === 2) {
+		  if (ev.targetTouches.length == 2) {
 		    // 2 つのタッチが、 2 タッチを開始したのと同じタッチかどうかを確認
 		    const point1 = tpCache.findLastIndex(
 		      (tp) => tp.identifier === ev.targetTouches[0].identifier,
@@ -108,7 +108,7 @@
 		function start_handler(ev) {。
 		  ev.preventDefault();
 		  // 2タッチピンチ/ズームを後で処理するためにタッチ点をキャッシュする
-		  if (ev.targetTouches.length === 2) {
+		  if (ev.targetTouches.length == 2) {
 		    for (let i = 0; i < ev.targetTouches.length; i++) {
 		      tpCache.push(ev.targetTouches[i]);
 		    }

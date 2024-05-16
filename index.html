@@ -30,25 +30,31 @@
    		     this.raycaster = null;
    		   });
   		  },
+
+  		  // 毎フレームの処理
   		  tick: function () {
   		      if (!this.raycaster) { return; }  // Not intersecting.
   		      let intersection = this.raycaster.components.raycaster.getIntersection(this.el).point;
   		      if (!intersection) { return; } // Not intersecting
-  		      // intersecting
+  		      // 箱の座標を衝突点にセット
   		      new_box.setAttribute('position', intersection);
+  		      new_box.setAttribute('rotation', cam.getAttribute('rotation'));
   		  }
  		 });
+		
 		</script>
 	</head>
 	<body onload="init();" style="touch-action:none">
 
 		<!--3D空間-->
 		<a-scene embedded arjs vr-mode-ui="enabled: false;">
-			<a-entity camera look-controls="touchEnabled: false;">
+			<a-entity id='camera' camera look-controls="touchEnabled: false;">
 				
-				<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target;  showLine:true;"></a-entity> <!--移動オブジェクトの移動先の取得-->
+				<!--移動オブジェクトの移動先の取得-->
+				<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target;  showLine:true;"></a-entity> 
 
-				<a-plane cursor-listener id="target" position="0 0 -2" scale="25 15 1" opacity="0"></a-plane> <!--rayの衝突用-->
+				<!--rayの衝突用-->
+				<a-plane cursor-listener id="target" position="0 0 -2" scale="25 15 1" opacity="0"></a-plane> 
 			</a-entity>
 		</a-scene>
 
@@ -59,6 +65,5 @@
 		<!--JS用-->
 
 		<script src="./data/tutorial.js"></script>
-		<script src="./data/rayControll.js"></script>
 	</body>
 </html>

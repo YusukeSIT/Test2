@@ -7,7 +7,7 @@ document.querySelector('a-scene').appendChild(new_box);
 var cam = document.getElementById('camera');
 
 function zoom(event) {
-  event.preventDefaultventDefault();
+  event.preventDefault();
 
   pos.z += event.deltaY * -0.003;
 

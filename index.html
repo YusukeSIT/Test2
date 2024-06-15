@@ -6,10 +6,24 @@
 		<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 		<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 		<script>
+		
+		navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+			window.addEventListener("load", ()=>{
+			    const main = document.querySelector("main");
+			 
+			    main.addEventListener("touchmove", function(e){
+			        // 端末のデフォルト動作をキャンセル
+			        e.preventDefault();
+			    });
+			});
+		}
+
+		</script>
+		<script>
 
 		AFRAME.registerComponent('cursor-listener', {
     		init: function () {
-   		   this.el.addEventListener('raycaster-intersected', evt => {
+			this.el.addEventListener('raycaster-intersected', evt => {
    		     this.raycaster = evt.detail.el;
    		   });
    		   this.el.addEventListener('raycaster-intersected-cleared', evt => {
@@ -33,7 +47,7 @@
 	<body onload="init();" style="touch-action:none">
 
 		<!--3D空間-->
-		<a-scene main embedded arjs vr-mode-ui="enabled: false;" device-orientation-permission-ui="enabled: false">
+		<a-scene id="mains" embedded arjs vr-mode-ui="enabled: false;">
 			<a-entity id='camera' camera look-controls="touchEnabled: false;" position="0 0 0">
 				
 				<!--移動オブジェクトの移動先の取得-->

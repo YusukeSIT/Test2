@@ -42,26 +42,22 @@ function init() {
   // touchcancel と touchend に同じハンドラーを使用
   el.ontouchcancel = end_handler;
   el.ontouchend = end_handler;
-        DeviceMotionEvent.requestPermission()
-                         .then((state) => {
-                           if (state === 'granted') {
-                             // パーミッションを取れた際の処理
-                           } else {
-                             // パーミッションを取れなかった際の処理
-                           }
-                         })
-                         .catch((err) => console.error(err));
 
-  if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
-    window.addEventListener("load", ()=>{
-        const main = document.querySelector("main");
-     
-        main.addEventListener("touchmove", function(e){
-            // 端末のデフォルト動作をキャンセル
-            e.preventDefault();
-        });
-    });
+
+  if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
+    DeviceMotionEvent.requestPermission()
+                     .then((state) => {
+                       if (state === 'granted') {
+                         setDevicemotionEvent();
+                       } else {
+                         alert('動作と方向へのアクセスを許可してください');
+                       }
+                     })
+                     .catch((err) => console.error(err));
+  } else {
+    setDevicemotionEvent();
   }
+
 }
 
 function handle_pinch_zoom(ev) {

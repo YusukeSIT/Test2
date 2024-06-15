@@ -48,7 +48,7 @@ function init() {
     DeviceMotionEvent.requestPermission()
                      .then((state) => {
                        if (state === 'granted') {
-                         new_box.setAttribute('color', 'gray');
+                         new_box.setAttribute('color', 'red');
                        } else {
                          alert('動作と方向へのアクセスを許可してください');
                        }

@@ -6,6 +6,13 @@
 		<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 		<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 		<script>
+		document.body.addEventListener('click', () => {
+		  
+		});
+
+
+		</script>
+		<script>
 
 		AFRAME.registerComponent('cursor-listener', {
     		init: function () {
@@ -29,40 +36,6 @@
  		 });
 		
 		</script>
-	</head>
-	<body onload="init();" style="touch-action:none">
-
-		<div class="overlay hidden"></div> <!-- overlay -->
-
-		  <button class="show-modal" id="btn">モーダルボタン</button> <!-- モーダルを表示されるボタン -->
-
-		  <div class="modal hidden">
-		    <!-- モーダル-->
-		    <button class="close-modal">&times;</button> <!-- モーダルを閉じるボタン -->
-		    <p>
-		      モダールウィンドウです。
-		    </p>
-		</div>
-
-		<!--3D空間-->
-		<a-scene main embedded arjs vr-mode-ui="enabled: false;" device-orientation-permission-ui="enabled: false">
-			<a-entity id='camera' camera look-controls="touchEnabled: false;" position="0 0 0">
-				
-				<!--移動オブジェクトの移動先の取得-->
-				<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target;"></a-entity> 
-
-				<!--rayの衝突用-->
-				<a-plane cursor-listener id="target" position="0 0 -2" scale="25 15 1" opacity="0"></a-plane> 
-			</a-entity>
-		</a-scene>
-
-		<!--仮UI-->
-
-
-
-		<!--JS用-->
-
-		<script src="./data/tutorial.js"></script>
 		<script>
 			const modal = document.querySelector(".modal"); //modalを指定
 			const overlay = document.querySelector(".overlay"); //overlayを指定
@@ -85,34 +58,27 @@
 			btnOpenModal.addEventListener("click", openModal);
 			btnCloseModal.addEventListener("click", closeModal);
 		</script>
-		<script>
-		document.getElementById('btn').addEventListener('click', () => {
-		  if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
-		    DeviceMotionEvent.requestPermission()
-		                     .then((state) => {
-		                       if (state === 'granted') {
-		                         // パーミッションを取れた際の処理
-		                       } else {
-		                         // パーミッションを取れなかった際の処理
-		                       }
-		                     })
-		                     .catch((err) => console.error(err));
-		  } else {
-		    // window.DeviceMotionEvent.requestPermissionが無いブラウザでの処理
-		  }
-		});
+	</head>
+	<body onload="init();" style="touch-action:none">
 
-		if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
-			window.addEventListener("load", ()=>{
-			    const main = document.querySelector("main");
-			 
-			    main.addEventListener("touchmove", function(e){
-			        // 端末のデフォルト動作をキャンセル
-			        e.preventDefault();
-			    });
-			});
-		}
+		<!--3D空間-->
+		<a-scene main embedded arjs vr-mode-ui="enabled: false;" device-orientation-permission-ui="enabled: false">
+			<a-entity id='camera' camera look-controls="touchEnabled: false;" position="0 0 0">
+				
+				<!--移動オブジェクトの移動先の取得-->
+				<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target;"></a-entity> 
 
-		</script>
+				<!--rayの衝突用-->
+				<a-plane cursor-listener id="target" position="0 0 -2" scale="25 15 1" opacity="0"></a-plane> 
+			</a-entity>
+		</a-scene>
+
+		<!--仮UI-->
+
+
+
+		<!--JS用-->
+
+		<script src="./data/tutorial.js"></script>
 	</body>
 </html>

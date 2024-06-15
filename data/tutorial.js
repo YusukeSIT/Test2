@@ -48,16 +48,14 @@ function init() {
     DeviceMotionEvent.requestPermission()
                      .then((state) => {
                        if (state === 'granted') {
-                         setDevicemotionEvent();
+                         //setDevicemotionEvent();
                        } else {
                          alert('動作と方向へのアクセスを許可してください');
                        }
                      })
                      .catch((err) => console.error(err));
-                     new_box.setAttribute('color', 'white');
   } else {
-    setDevicemotionEvent();
-    new_box.setAttribute('color', 'black');
+    //setDevicemotionEvent();
   }
 
 }

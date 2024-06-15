@@ -54,8 +54,10 @@ function init() {
                        }
                      })
                      .catch((err) => console.error(err));
+                     new_box.setAttribute('color', 'white');
   } else {
     setDevicemotionEvent();
+    new_box.setAttribute('color', 'black');
   }
 
 }

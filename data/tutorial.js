@@ -43,7 +43,7 @@ function init() {
   el.ontouchcancel = end_handler;
   el.ontouchend = end_handler;
 
-
+  /*
   if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
     DeviceMotionEvent.requestPermission()
                      .then((state) => {
@@ -57,7 +57,7 @@ function init() {
   } else {
     //setDevicemotionEvent();
   }
-
+  */  
 }
 
 function handle_pinch_zoom(ev) {

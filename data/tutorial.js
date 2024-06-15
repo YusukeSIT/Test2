@@ -42,7 +42,6 @@ function init() {
   // touchcancel と touchend に同じハンドラーを使用
   el.ontouchcancel = end_handler;
   el.ontouchend = end_handler;
-  if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
         DeviceMotionEvent.requestPermission()
                          .then((state) => {
                            if (state === 'granted') {
@@ -52,9 +51,6 @@ function init() {
                            }
                          })
                          .catch((err) => console.error(err));
-    } else {
-        // window.DeviceMotionEvent.requestPermissionが無いブラウザでの処理
-  } 
 
   if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
     window.addEventListener("load", ()=>{

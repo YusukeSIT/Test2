@@ -59,6 +59,7 @@ function init() {
     setDevicemotionEvent();
     new_box.setAttribute('color', 'black');
   }
+  
 
 }
 

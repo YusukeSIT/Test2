@@ -6,33 +6,6 @@
 		<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 		<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 		<script>
-		if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
-		DeviceMotionEvent.requestPermission()
-		                 .then((state) => {
-		                   if (state === 'granted') {
-		                     // パーミッションを取れた際の処理
-		                   } else {
-		                     // パーミッションを取れなかった際の処理
-		                   }
-		                 })
-		                 .catch((err) => console.error(err));
-		} else {
-		// window.DeviceMotionEvent.requestPermissionが無いブラウザでの処理
-		};
-
-		if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
-			window.addEventListener("load", ()=>{
-			    const main = document.querySelector("main");
-			 
-			    main.addEventListener("touchmove", function(e){
-			        // 端末のデフォルト動作をキャンセル
-			        e.preventDefault();
-			    });
-			});
-		}
-
-		</script>
-		<script>
 
 		AFRAME.registerComponent('cursor-listener', {
     		init: function () {
@@ -59,6 +32,18 @@
 	</head>
 	<body onload="init();" style="touch-action:none">
 
+		<div class="overlay hidden"></div> <!-- overlay -->
+
+		  <button class="show-modal" id="btn">モーダルボタン</button> <!-- モーダルを表示されるボタン -->
+
+		  <div class="modal hidden">
+		    <!-- モーダル-->
+		    <button class="close-modal">&times;</button> <!-- モーダルを閉じるボタン -->
+		    <p>
+		      モダールウィンドウです。
+		    </p>
+		</div>
+
 		<!--3D空間-->
 		<a-scene main embedded arjs vr-mode-ui="enabled: false;" device-orientation-permission-ui="enabled: false">
 			<a-entity id='camera' camera look-controls="touchEnabled: false;" position="0 0 0">
@@ -78,5 +63,56 @@
 		<!--JS用-->
 
 		<script src="./data/tutorial.js"></script>
+		<script>
+			const modal = document.querySelector(".modal"); //modalを指定
+			const overlay = document.querySelector(".overlay"); //overlayを指定
+			const btnOpenModal = document.querySelector(".show-modal"); //modalを開くボタンを指定
+			const btnCloseModal = document.querySelector(".close-modal"); //modalを閉じるボタンを指定
+
+			//modalとoverlayのhiddenクラスを消す（modalとoverlayが見えるようにする）処理
+			const openModal = () => {
+			  modal.classList.remove("hidden");
+			  overlay.classList.remove("hidden");
+			};
+
+			//modalとoverlayのhiddenクラスを追加する（modalとoverlayが見えないようにする）処理
+			const closeModal = () => {
+			  modal.classList.add("hidden");
+			  overlay.classList.add("hidden");
+			};
+
+			//modalの開くボタンと閉じるボタンをクリックした時の処理
+			btnOpenModal.addEventListener("click", openModal);
+			btnCloseModal.addEventListener("click", closeModal);
+		</script>
+		<script>
+		document.getElementById('btn').addEventListener('click', () => {
+		  if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
+		    DeviceMotionEvent.requestPermission()
+		                     .then((state) => {
+		                       if (state === 'granted') {
+		                         // パーミッションを取れた際の処理
+		                       } else {
+		                         // パーミッションを取れなかった際の処理
+		                       }
+		                     })
+		                     .catch((err) => console.error(err));
+		  } else {
+		    // window.DeviceMotionEvent.requestPermissionが無いブラウザでの処理
+		  }
+		});
+
+		if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+			window.addEventListener("load", ()=>{
+			    const main = document.querySelector("main");
+			 
+			    main.addEventListener("touchmove", function(e){
+			        // 端末のデフォルト動作をキャンセル
+			        e.preventDefault();
+			    });
+			});
+		}
+
+		</script>
 	</body>
 </html>

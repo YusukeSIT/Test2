@@ -41,13 +41,34 @@
   		      new_box.setAttribute('rotation', cam.getAttribute('rotation'));
   		  }
  		 });
+
+		AFRAME.registerComponent('getPermission', {
+
+			tick: function ()  {
+			  if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
+			    DeviceMotionEvent.requestPermission()
+			                     .then((state) => {
+			                       if (state === 'granted') {
+			                         new_box.setAttribute('color', 'gray');
+			                       } else {
+			                         alert('動作と方向へのアクセスを許可してください');
+			                       }
+			                     })
+			                     .catch((err) => console.error(err));
+			                     new_box.setAttribute('color', 'white');
+			  } else {
+			    new_box.setAttribute('color', 'black');
+			  }
+			}
+
+		});
 		
 		</script>
 	</head>
 	<body onload="init();" style="touch-action:none">
 
 		<!--3D空間-->
-		<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;">
+		<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;" getPermission>
 			<a-entity id='camera' camera look-controls="touchEnabled: false;" position="0 0 0">
 				
 				<!--移動オブジェクトの移動先の取得-->

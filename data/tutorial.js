@@ -48,10 +48,10 @@ function init() {
                          new_box.setAttribute('color', 'gray');
                        } else {
                          alert('動作と方向へのアクセスを許可してください');
+                         new_box.setAttribute('color', 'white');
                        }
                      })
                      .catch((err) => console.error(err));
-                     new_box.setAttribute('color', 'white');
   } else {
     new_box.setAttribute('color', 'black');
   }

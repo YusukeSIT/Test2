@@ -41,6 +41,20 @@ function init() {
   // touchcancel と touchend に同じハンドラーを使用
   el.ontouchcancel = end_handler;
   el.ontouchend = end_handler;
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    DeviceMotionEvent.requestPermission()
+    .then(permissionState => {
+      if (permissionState === 'granted') {
+                         new_box.setAttribute('color', 'gray');
+                       } else {
+                         alert('動作と方向へのアクセスを許可してください');
+                       }
+                     })
+                     .catch((err) => console.error(err));
+                     new_box.setAttribute('color', 'white');
+  } else {
+    new_box.setAttribute('color', 'black');
+  }
 }
 
 function handle_pinch_zoom(ev) {

@@ -21,7 +21,22 @@ function zoom(event) {
 
 
 document.body.addEventListener('wheel', zoom, {passive: false});
-
+document.body.addEventListener('click', () => {
+  if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
+    DeviceMotionEvent.requestPermission()
+                     .then((state) => {
+                       if (state === 'granted') {
+                         new_box.setAttribute('color', 'gray');
+                       } else {
+                         alert('動作と方向へのアクセスを許可してください');
+                       }
+                     })
+                     .catch((err) => console.error(err));
+                     new_box.setAttribute('color', 'white');
+  } else {
+    new_box.setAttribute('color', 'black');
+  }
+});
 
 var target_area = document.createElement('a-plane');
 target_area.setAttribute('color', 'red');
@@ -42,24 +57,6 @@ function init() {
   // touchcancel と touchend に同じハンドラーを使用
   el.ontouchcancel = end_handler;
   el.ontouchend = end_handler;
-
-
-  if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
-    DeviceMotionEvent.requestPermission()
-                     .then((state) => {
-                       if (state === 'granted') {
-                         new_box.setAttribute('color', 'red');
-                       } else {
-                         alert('動作と方向へのアクセスを許可してください');
-                       }
-                     })
-                     .catch((err) => console.error(err));
-                     new_box.setAttribute('color', 'white');
-  } else {
-    new_box.setAttribute('color', 'black');
-  }
-
-
 }
 
 function handle_pinch_zoom(ev) {

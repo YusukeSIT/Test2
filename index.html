@@ -18,7 +18,7 @@
 			});
 		}
 		*/
-		
+
 		</script>
 		<script>
 
@@ -47,8 +47,12 @@
 	</head>
 	<body onload="init();" style="touch-action:none">
 
+		<div id="permission_ui">
+			<h1 class="center_ui">画面をタッチしてください</h1>
+		</div>
+
 		<!--3D空間-->
-		<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;">
+		<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;" style="display: none">
 			<a-entity id='camera' camera look-controls="touchEnabled: false;" position="0 0 0">
 				
 				<!--移動オブジェクトの移動先の取得-->
@@ -60,7 +64,6 @@
 		</a-scene>
 
 		<!--仮UI-->
-
 
 
 		<!--JS用-->

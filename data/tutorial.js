@@ -22,6 +22,8 @@ function zoom(event) {
 
 document.body.addEventListener('wheel', zoom, {passive: false});
 document.addEventListener('click', () => {
+  document.getElementById('permission_ui').setAttribute('class', 'deleted_ui');
+  document.getElementById('main').removeAttribute('style');
   if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
     DeviceMotionEvent.requestPermission()
                      .then((state) => {
@@ -36,6 +38,7 @@ document.addEventListener('click', () => {
   } else {
     new_box.setAttribute('color', 'black');
   }
+
 });
 
 var target_area = document.createElement('a-plane');

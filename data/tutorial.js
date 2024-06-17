@@ -22,7 +22,7 @@ function zoom(event) {
 
 document.body.addEventListener('wheel', zoom, {passive: false});
 document.addEventListener('readystatechange', () => {
-  if(document.readyState === 'interactive'){
+  if(document.readyState === 'complete'){
     if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
       DeviceMotionEvent.requestPermission()
                        .then((state) => {

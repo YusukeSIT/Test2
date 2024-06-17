@@ -22,7 +22,10 @@ function zoom(event) {
 
 document.body.addEventListener('wheel', zoom, {passive: false});
 document.addEventListener('click', () => {
-  document.getElementById('permission_ui').setAttribute('class', 'deleted_ui');
+  document.querySelectorAll('.permission_ui').forEach((del) => {
+    del.setAttribute('class', 'deleted_ui');
+    console.log("succes");
+  });
   document.getElementById('main').removeAttribute('style');
   if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
     DeviceMotionEvent.requestPermission()

@@ -41,7 +41,7 @@ document.addEventListener('click', () => {
   } else {
     new_box.setAttribute('color', 'black');
   }
-
+  init();
 });
 
 var target_area = document.createElement('a-plane');

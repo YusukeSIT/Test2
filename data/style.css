@@ -26,13 +26,12 @@
 
 	background-color: #fff;
 
- 	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .center_ui {
-  position: absolute;
-  top: 50%;
-  left: 45%;
   font-size: 20px;
 }
 

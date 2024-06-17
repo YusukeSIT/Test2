@@ -21,7 +21,7 @@ function zoom(event) {
 
 
 document.body.addEventListener('wheel', zoom, {passive: false});
-document.addEventListener('devicemotion', () => {
+window.addEventListener('devicemotion', () => {
   if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
     DeviceMotionEvent.requestPermission()
                      .then((state) => {

@@ -21,20 +21,23 @@ function zoom(event) {
 
 
 document.body.addEventListener('wheel', zoom, {passive: false});
-document.addEventListener('click', () => {
-  if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
-    DeviceMotionEvent.requestPermission()
-                     .then((state) => {
-                       if (state === 'granted') {
-                         new_box.setAttribute('color', 'gray');
-                       } else {
-                         alert('動作と方向へのアクセスを許可してください');
-                       }
-                     })
-                     .catch((err) => console.error(err));
-                     new_box.setAttribute('color', 'white');
-  } else {
-    new_box.setAttribute('color', 'black');
+document.addEventListener('readystatechange', () => {
+  if(document.readyState === 'complete'){
+    if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
+      DeviceMotionEvent.requestPermission()
+                       .then((state) => {
+                         if (state === 'granted') {
+                           new_box.setAttribute('color', 'gray');
+                         } else {
+                           alert('動作と方向へのアクセスを許可してください');
+                         }
+                       })
+                       .catch((err) => console.error(err));
+                       new_box.setAttribute('color', 'white');
+    } else {
+      new_box.setAttribute('color', 'black');
+    }
+
   }
 });
 

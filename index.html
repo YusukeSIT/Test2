@@ -23,8 +23,8 @@
   		      let intersection = this.raycaster.components.raycaster.getIntersection(this.el).point;
   		      if (!intersection) { return; } // Not intersecting
   		      // 箱の座標を衝突点にセット
-  		      //new_box.setAttribute('position', intersection);
-  		      //new_box.setAttribute('rotation', cam.getAttribute('rotation'));
+  		      new_box.setAttribute('position', intersection);
+  		      new_box.setAttribute('rotation', cam.getAttribute('rotation'));
   		  }
  		 });
 		

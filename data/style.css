@@ -24,6 +24,9 @@
 	width: 100vw;
 	height: 100vh;
 
+	margin-left: 0;
+	margin-right: 0;
+
 	background-color: #fff;
 
 	display: flex;

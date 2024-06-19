@@ -26,10 +26,10 @@
 
 	background-color: #fff;
 
+	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
-	right: -20px;
+	position: absolute;
 }
 
 .center_ui {
